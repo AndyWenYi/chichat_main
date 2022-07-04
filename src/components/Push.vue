@@ -703,104 +703,114 @@ export default {
       alert('已上傳')
     },
     getTexts: function () {
+      
       axios.get('https://gettexts-dot-galvanic-ripsaw-281806.df.r.appspot.com/', {
         params: {
-          client_name: this.tableSelected,
-          pushNum: this.selectedPushNum
-        }
+          client_name:this.tableSelected,
+          push_num:this.selectedPushNum
+        },
       }).then(response => {
-        this.textList = response.data.replace('\r', '')
+        this.textList = response.data.replace('\r','');
         // console.log(this.textList)
-        var splitTexts = this.textList.split('\n\n').filter(function (s) { return s !== '' })
-        var splitnText = this.textList.split('\n').filter(function (s) { return s !== '' })
-        // console.log(splitnText)
+        var split_texts = this.textList.split('\n\n').filter(function(s){return s !== '';});
+        var split_n_text = this.textList.split('\n').filter(function(s){return s !== '';});
+        // console.log(split_n_text)
 
-        this.flex_text1 = splitTexts[splitTexts.length - 1]
-        this.flex_text2 = splitTexts[splitTexts.length - 3]
-        this.flexTitleTxt1_1 = splitnText.slice(6, 8).join('\n')
-        this.flexTitleTxt1_2 = splitnText.slice(13, 15).join('\n')
-        this.flexTitleTxt2_1 = splitnText.slice(23, 25).join('\n')
-        this.flexTitleTxt2_2 = splitnText.slice(30, 32).join('\n')
-        this.flexContentTxt1_1 = splitnText.slice(8, 10).join('\n')
-        this.flexContentTxt1_2 = splitnText.slice(25, 27).join('\n')
-        this.flexContentTxt2_1 = splitnText.slice(18, 21).join('\n')
-        this.flexContentTxt2_2 = splitnText.slice(32, 34).join('\n')
-        this.flexEndTxt1_1 = splitnText.slice(10, 12).join('\n')
-        this.flexEndTxt1_2 = splitnText.slice(17, 19).join('\n')
-        this.flexEndTxt2_1 = splitnText.slice(27, 29).join('\n')
-        this.flexEndTxt2_2 = splitnText.slice(34, 36).join('\n')
-        this.flexButtonTxt1_1 = splitnText.slice(12, 13).join('\n')
-        this.flexButtonTxt1_2 = splitnText.slice(19, 20).join('\n')
-        this.flexButtonTxt2_1 = splitnText.slice(29, 30).join('\n')
-        this.flexButtonTxt2_2 = splitnText.slice(36, 37).join('\n')
-        this.queryTxt1 = splitnText.slice(0, 1).join('\n')
-        this.queryTxt2 = splitnText.slice(1, 2).join('\n')
-        this.queryTxt3 = splitnText.slice(2, 3).join('\n')
-        this.queryTxt4 = splitnText.slice(3, 4).join('\n')
-        this.queryTxt5 = splitnText.slice(4, 5).join('\n')
-        this.queryTxt6 = splitnText.slice(5, 6).join('\n')
-        this.queryTxt7 = splitnText.slice(6, 7).join('\n')
-        this.queryTxt8 = splitnText.slice(7, 8).join('\n')
-        this.queryTxt9 = splitnText.slice(8, 9).join('\n')
-        this.queryTxt10 = splitnText.slice(9, 10).join('\n')
-        this.queryTxt11 = splitnText.slice(10, 11).join('\n')
-        this.queryTxt12 = splitnText.slice(11, 12).join('\n')
-        this.queryTxt13 = splitnText.slice(12, 13).join('\n')
-        this.queryTxt14 = splitnText.slice(13, 14).join('\n')
-        this.queryTxt15 = splitnText.slice(14, 15).join('\n')
-        this.queryTxt16 = splitnText.slice(15, 16).join('\n')
-        this.queryTxt17 = splitnText.slice(16, 17).join('\n')
-        this.queryTxt18 = splitnText.slice(17, 18).join('\n')
-        this.queryTxt19 = splitnText.slice(18, 19).join('\n')
-        this.queryTxt21 = splitnText.slice(19, 20).join('\n')
-        this.queryTxt22 = splitnText.slice(20, 21).join('\n')
-        this.queryTxt23 = splitnText.slice(21, 22).join('\n')
-        this.queryTxt24 = splitnText.slice(22, 23).join('\n')
-        this.queryTxt25 = splitnText.slice(23, 24).join('\n')
-        this.queryTxt26 = splitnText.slice(24, 25).join('\n')
-        this.queryTxt27 = splitnText.slice(25, 26).join('\n')
-        this.queryTxt28 = splitnText.slice(26, 27).join('\n')
-        this.queryTxt29 = splitnText.slice(27, 28).join('\n')
-        this.queryTxt30 = splitnText.slice(28, 29).join('\n')
-        this.queryTxt31 = splitnText.slice(29, 30).join('\n')
-        this.queryTxt32 = splitnText.slice(30, 31).join('\n')
-        this.queryTxt33 = splitnText.slice(31, 32).join('\n')
-        this.queryTxt34 = splitnText.slice(32, 33).join('\n')
-        this.queryTxt35 = splitnText.slice(33, 34).join('\n')
-        this.queryTxt36 = splitnText.slice(34, 35).join('\n')
-        this.queryTxt37 = splitnText.slice(35, 36).join('\n')
-        this.queryTxt38 = splitnText.slice(36, 37).join('\n')
+        this.flex_text1 = split_texts[split_texts.length-1]
+        this.flex_text2 = split_texts[split_texts.length-3]
+        this.flexTitleTxt1_1 = split_n_text.slice(6,8).join('\n');
+        this.flexTitleTxt1_2 = split_n_text.slice(13,15).join('\n');
+        this.flexTitleTxt2_1 = split_n_text.slice(23,25).join('\n');
+        this.flexTitleTxt2_2 = split_n_text.slice(30,32).join('\n');
+        this.flexContentTxt1_1 = split_n_text.slice(8,10).join('\n');
+        this.flexContentTxt1_2 = split_n_text.slice(25,27).join('\n');
+        this.flexContentTxt2_1 = split_n_text.slice(18,21).join('\n');
+        this.flexContentTxt2_2 = split_n_text.slice(32,34).join('\n');
+        this.flexEndTxt1_1 = split_n_text.slice(10,12).join('\n');
+        this.flexEndTxt1_2 = split_n_text.slice(17,19).join('\n');
+        this.flexEndTxt2_1 = split_n_text.slice(27,29).join('\n');
+        this.flexEndTxt2_2 = split_n_text.slice(34,36).join('\n');
+        this.flexButtonTxt1_1 = split_n_text.slice(12,13).join('\n');
+        this.flexButtonTxt1_2 = split_n_text.slice(19,20).join('\n');
+        this.flexButtonTxt2_1 = split_n_text.slice(29,30).join('\n');
+        this.flexButtonTxt2_2 = split_n_text.slice(36,37).join('\n');
+        this.queryTxt1 = split_n_text.slice(0,1).join('\n');
+        this.queryTxt2 = split_n_text.slice(1,2).join('\n');
+        this.queryTxt3 = split_n_text.slice(2,3).join('\n');
+        this.queryTxt4 = split_n_text.slice(3,4).join('\n');
+        this.queryTxt5 = split_n_text.slice(4,5).join('\n');
+        this.queryTxt6 = split_n_text.slice(5,6).join('\n');
+        this.queryTxt7 = split_n_text.slice(6,7).join('\n');
+        this.queryTxt8 = split_n_text.slice(7,8).join('\n');
+        this.queryTxt9 = split_n_text.slice(8,9).join('\n');
+        this.queryTxt10 = split_n_text.slice(9,10).join('\n');
+        this.queryTxt11 = split_n_text.slice(10,11).join('\n');
+        this.queryTxt12 = split_n_text.slice(11,12).join('\n');
+        this.queryTxt13 = split_n_text.slice(12,13).join('\n');
+        this.queryTxt14 = split_n_text.slice(13,14).join('\n');
+        this.queryTxt15 = split_n_text.slice(14,15).join('\n');
+        this.queryTxt16 = split_n_text.slice(15,16).join('\n');
+        this.queryTxt17 = split_n_text.slice(16,17).join('\n');
+        this.queryTxt18 = split_n_text.slice(17,18).join('\n');
+        this.queryTxt19 = split_n_text.slice(18,19).join('\n');
+        this.queryTxt21 = split_n_text.slice(19,20).join('\n');
+        this.queryTxt22 = split_n_text.slice(20,21).join('\n');
+        this.queryTxt23 = split_n_text.slice(21,22).join('\n');
+        this.queryTxt24 = split_n_text.slice(22,23).join('\n');
+        this.queryTxt25 = split_n_text.slice(23,24).join('\n');
+        this.queryTxt26 = split_n_text.slice(24,25).join('\n');
+        this.queryTxt27 = split_n_text.slice(25,26).join('\n');
+        this.queryTxt28 = split_n_text.slice(26,27).join('\n');
+        this.queryTxt29 = split_n_text.slice(27,28).join('\n');
+        this.queryTxt30 = split_n_text.slice(28,29).join('\n');
+        this.queryTxt31 = split_n_text.slice(29,30).join('\n');
+        this.queryTxt32 = split_n_text.slice(30,31).join('\n');
+        this.queryTxt33 = split_n_text.slice(31,32).join('\n');
+        this.queryTxt34 = split_n_text.slice(32,33).join('\n');
+        this.queryTxt35 = split_n_text.slice(33,34).join('\n');
+        this.queryTxt36 = split_n_text.slice(34,35).join('\n');
+        this.queryTxt37 = split_n_text.slice(35,36).join('\n');
+        this.queryTxt38 = split_n_text.slice(36,37).join('\n');
 
-        var count = 1
-        for (var text in splitTexts) {
-          var portion = splitTexts[text]
+        var count = 1;
+        for (var text in split_texts) {
+          var portion = split_texts[text];
           if (count === 1) {
-            this.text1 = portion
-            count += 1
-          } else if (count === 2) {
-            this.text2 = portion
-            count += 1
-          } else if (count === 3) {
-            this.text3 = portion
-            count += 1
-          } else if (count === 4) {
-            this.text4 = portion
-            count += 1
-          } else if (count === 5) {
-            this.text5 = portion
-            count += 1
-          } else if (count === 6) {
-            this.text6 = portion
-            count += 1
-          } else if (count === 7) {
-            this.text7 = portion
-            count += 1
-          } else if (count === 8) {
-            this.text8 = portion
-            count += 1
-          } else if (count === 9) {
-            this.text9 = portion
-            count += 1
+            this.text1 = portion;
+            count += 1;
+            //console.log(this.text1)
+          }else if (count === 2) {
+            this.text2 = portion;
+            count += 1;
+            //console.log(this.text2)
+          }else if (count === 3) {
+            this.text3 = portion;
+            count += 1;
+            //console.log(this.text3)
+          }else if (count === 4) {
+            this.text4 = portion;
+            count += 1;
+            //console.log(this.text4)
+          }else if (count === 5) {
+            this.text5 = portion;
+            count += 1;
+            //console.log(this.text5)
+          }else if (count === 6) {
+            this.text6 = portion;
+            count += 1;
+            //console.log(this.text6)
+          }else if (count === 7) {
+            this.text7 = portion;
+            count += 1;
+            //console.log(this.text7)
+          }else if (count === 8) {
+            this.text8 = portion;
+            count += 1;
+            //console.log(this.text8)
+          }else if (count === 9) {
+            this.text9 = portion;
+            count += 1;
+            //console.log(this.text9)
           }
         }
       })
