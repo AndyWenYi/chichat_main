@@ -1,255 +1,260 @@
-<template>
+<template @click="hideModal">
   <div>
-    <h2 class='header-top'></h2>
-    <div class='col-sm-2 col-form-label'>
-      <div class='content-sec1'>
+    
+    <h2 class="header-top">Hitobito ChiChat</h2>
+    <div class="col-sm-2 col-form-label">
+      <div class="content-sec1">
         <h3>請選擇商品/服務名字</h3>
-        <v-select class='table-sel' v-model='tableSelected' :options='tables'>
-            <option class='table-opt' v-for='table in tables' :key='table.id'>{{ table }}</option>
+        <v-select class="table-sel" v-model="tableSelected" :options="tables">
+            <option class="table-opt" v-for="table in tables" :key='table.id'>{{ table }}</option>
         </v-select>
         <br>
         <h3>確認欄</h3>
-        <div class='content-sec2'>
-          <p class='selected-section'>{{ tableSelected }}</p>
+        <div class="content-sec2">
+          <p class="selected-section">{{ tableSelected }}</p>
         </div>
-        <button class='btn1' @click='getPgid();searchFiles();resetList();'>生成對話</button>
+        <button class="btn1" @click="getPgid();searchFiles();resetList();">生成對話</button>
       </div>
     </div>
-    <div class='col-sm-2 col-form-label'>
-      <div class='content-sec4'>
+    
+    <div class="col-sm-2 col-form-label">
+      <div class="content-sec4">
         <h3>push編號</h3>
-          <v-select class='table-sel' v-model='selectedPushNum' :options='pushNum'>
-            <option class='table-opt' v-for='pushNum in pushNum' :key='pushNum.id'>{{ pushNum }}</option>
+          <v-select class="table-sel" v-model="selectedPushNum" :options="pushNum">
+            <option class="table-opt" v-for="push_num in pushNum" :key='push_num.id'>{{ push_num }}</option>
           </v-select>
-          <button class='btn2' @click='getTexts();'>取得對話</button>
+          <button class="btn2" @click="getTexts();">取得對話</button>
       </div>
     </div>
 
-    <div class='col-sm-2 col-form-label'>
-      <div class='content-sec5'>
+    <div class="col-sm-2 col-form-label">
+      <div class="content-sec5">
         <h3>關鍵詞</h3>
-        <input type='text' class='keyword-input-filed' v-model='triggerKeyword'>
+        <input type="text" class="keyword-input-filed" v-model="triggerKeyword">
       </div>
     </div>
-    <div class='col-sm-2 col-form-label'>
-      <div class='content-sec6'>
+    <div class="col-sm-2 col-form-label">
+      <div class="content-sec6">
         <h3>flex標題</h3>
-        <input type='text' class='keyword-input-filed' v-model='flexTitle'>
+        <input type="text" class="keyword-input-filed" v-model="flexTitle">
       </div>
     </div>
-    <div class='textField-wrapper'>
-      <div class='textField-container1'>
-        <h3 class='node-lv1'>Lv1</h3>
-        <p class='tag-title1'>標籤名字:</p>
-        <input type='text' class='tagField_lv1' v-model='tagName1'>
-        <textarea class='text-field1' v-model='text1' v-on:blur='edit = false'></textarea>
+    <div class="textField-wrapper">
+      <div class="textField-container1">
+        <h3 class="node-lv1">Lv1</h3> 
+        <p class="tag-title1">標籤名字:</p>
+        <input type="text" class="tagField_lv1" v-model="tagName1">
+        <textarea class="text-field1" v-model='text1' v-on:blur="edit = false"></textarea>
       </div>
       <div>
-        <h3 class='node-lv2'>選擇</h3>
-        <textarea class='text-field2' v-model='text2' v-on:blur='edit = false'></textarea>
-        <textarea class='text-field3' v-model='text3' v-on:blur='edit = false'></textarea>
+        <h3 class="node-lv2">選擇</h3>
+        <textarea class="text-field2" v-model='text2' v-on:blur="edit = false"></textarea>
+        <textarea class="text-field3" v-model='text3' v-on:blur="edit = false"></textarea>
       </div>
       <div>
-        <h3 class='node-lv3'>Lv2</h3>
-        <p class='tag-title2'>標籤名字:</p>
-        <input type='text' class='tagField_lv2' v-model='tagName2'>
-        <textarea class='text-field4' v-model='text4' v-on:blur='edit = false'></textarea>
-        <textarea class='text-field5' v-model='text7' v-on:blur='edit = false'></textarea>
+        <h3 class="node-lv3">Lv2</h3>
+        <p class="tag-title2">標籤名字:</p>
+        <input type="text" class="tagField_lv2" v-model="tagName2">
+        <textarea class="text-field4" v-model='text4' v-on:blur="edit = false"></textarea>
+        <textarea class="text-field5" v-model='text7' v-on:blur="edit = false"></textarea>
       </div>
       <div>
-        <h3 class='node-lv4'>Lv3(Flex)</h3>
-        <p class='tag-title3'>標籤名字:</p>
-        <input type='text' class='tagField_lv3' v-model='tagName3'>
-        <textarea class='text-field6' v-model='text8' v-on:blur='edit = false'></textarea>
-        <textarea class='text-field7' v-model='text5' v-on:blur='edit = false'></textarea>
+        <h3 class="node-lv4">Lv3(Flex)</h3>
+        <p class="tag-title3">標籤名字:</p>
+        <input type="text" class="tagField_lv3" v-model="tagName3">
+        <textarea class="text-field6" v-model='text8' v-on:blur="edit = false"></textarea>
+        <textarea class="text-field7" v-model='text5' v-on:blur="edit = false"></textarea>
       </div>
       <div>
-        <h3 class='node-lv5'>Lv4(Flex)</h3>
-        <p class='tag-title4'>標籤名字:</p>
-        <input type='text' class='tagField_lv4' v-model='tagName4'>
-        <textarea class='text-field8' v-model='text6' v-on:blur='edit = false'></textarea>
-        <textarea class='text-field9' v-model='text9' v-on:blur='edit = false'></textarea>
+        <h3 class="node-lv5">Lv4(Flex)</h3>
+        <p class="tag-title4">標籤名字:</p>
+        <input type="text" class="tagField_lv4" v-model="tagName4">
+        <textarea class="text-field8" v-model='text6' v-on:blur="edit = false"></textarea>
+        <textarea class="text-field9" v-model='text9' v-on:blur="edit = false"></textarea>
       </div>
     </div>
-    <div class='col-sm-2 col-form-label'>
-      <div class='flex-sec1'>
+
+    <div class="col-sm-2 col-form-label">
+      <div class="flex-sec1">
         <p>{{text2}}的Flex部分</p>
         <p>標題顏色</p>
-        <v-select class='color-sec1' v-model='selectedTitleColor1' :options='colors'>
-          <option class='color-sel1' v-for='color in colors' :key='color.id'>
+        <v-select class="color-sec1" v-model="selectedTitleColor1" :options="colors">
+          <option class="color-sel1" v-for="color in colors" :key='color.id'>
             {{ color }}
           </option>
         </v-select>
         <p>文章顏色</p>
-        <v-select class='color-sec1' v-model='selectedEndColor1' :options='colors'>
-          <option class='color-sel1' v-for='color in colors' :key='color.id'>
+        <v-select class="color-sec1" v-model="selectedEndColor1" :options="colors">
+          <option class="color-sel1" v-for="color in colors" :key='color.id'>
             {{ color }}
           </option>
         </v-select>
         <p>按鈕顏色</p>
-        <v-select class='color-sec1' v-model='selectedButtonColor1' :options='colors'>
-          <option class='color-sel1' v-for='color in colors' :key='color.id'>
+        <v-select class="color-sec1" v-model="selectedButtonColor1" :options="colors">
+          <option class="color-sel1" v-for="color in colors" :key='color.id'>
             {{ color }}
           </option>
         </v-select>
-        <button class='preview-btn' @click='showModal1'>預覽</button>
-        <button class='setting-btn' @click='showModalBody1'>圖片&URL</button>
+        <button class="preview-btn" @click="showModal1">預覽</button>
+        <button class="setting-btn" @click="showModalBody1">圖片&URL</button>
       </div>
     </div>
 
-    <div class='col-sm-2 col-form-label'>
-      <div class='flex-sec2'>
+    <div class="col-sm-2 col-form-label">
+      <div class="flex-sec2">
         <p>{{text3}}的Flex部分</p>
         <p>標題顏色</p>
-        <v-select class='color-sec2' v-model='selectedTitleColor2' :options='colors'>
-          <option class='color-sel2' v-for='color in colors' :key='color.id'>
+        <v-select class="color-sec2" v-model="selectedTitleColor2" :options="colors">
+          <option class="color-sel2" v-for="color in colors" :key='color.id'>
             {{ color }}
           </option>
         </v-select>
         <p>文章顏色</p>
-        <v-select class='color-sec2' v-model='selectedEndColor2' :options='colors'>
-          <option class='color-sel2' v-for='color in colors' :key='color.id'>
+        <v-select class="color-sec2" v-model="selectedEndColor2" :options="colors">
+          <option class="color-sel2" v-for="color in colors" :key='color.id'>
             {{ color }}
           </option>
         </v-select>
         <p>按鈕顏色</p>
-        <v-select class='color-sec2' v-model='selectedButtonColor2' :options='colors'>
-          <option class='color-sel2' v-for='color in colors' :key='color.id'>
+        <v-select class="color-sec2" v-model="selectedButtonColor2" :options="colors">
+          <option class="color-sel2" v-for="color in colors" :key='color.id'>
             {{ color }}
           </option>
         </v-select>
-        <button class='preview-btn' @click='showModal2'>預覽</button>
-        <button class='setting-btn' @click='showModalBody2'>圖片&URL</button>
-      </div>
+        <button class="preview-btn" @click="showModal2">預覽</button>
+        <button class="setting-btn" @click="showModalBody2">圖片&URL</button>
+      </div>   
     </div>
 
-    <div class='l-modal' v-if='modalVisible1'>
-      <div class='modalStyle1' @click='hideModal'>
-        <div class='img-container'>
-          <img :src='imgFile1' class='img-sec'>
+    <div class="l-modal" v-if="modalVisible1">
+      <div class="modalStyle1" @click="hideModal">
+        <div class="img-container">
+          <img :src="imgFile1" class="img-sec">
         </div>
-        <p :style='titleColorStyle1'>{{flexTitleTxt1_1}}</p>
-        <p :style='contentColorStyle1'>{{flexContentTxt1_1}}</p>
-        <p :style='endColorStyle1'>{{flexEndTxt1_1}}</p>
-        <button class='p-modal__btn' :style='buttonColorStyle1'>{{flexButtonTxt1_1}}</button>
+        <p :style="titleColorStyle1">{{flexTitleTxt1_1}}</p>
+        <p :style="contentColorStyle1">{{flexContentTxt1_1}}</p>
+        <p :style="endColorStyle1">{{flexEndTxt1_1}}</p>
+        <button class="p-modal__btn" :style="buttonColorStyle1">{{flexButtonTxt1_1}}</button>
       </div>
-      <div class='modalStyle2' @click='hideModal'>
-        <div class='img-container'>
-          <img :src='imgFile2' class='img-sec'>
+      <div class="modalStyle2" @click="hideModal">
+        <div class="img-container">
+          <img :src="imgFile2" class="img-sec">
         </div>
-          <p :style='titleColorStyle1'>{{flexTitleTxt1_2}}</p>
-          <p :style='contentColorStyle1'>{{flexContentTxt1_2}}</p>
-          <p :style='endColorStyle1'>{{flexEndTxt1_2}}</p>
-          <button class='p-modal__btn' :style='buttonColorStyle1'>{{flexButtonTxt1_2}}</button>
+          <p :style="titleColorStyle1">{{flexTitleTxt1_2}}</p>
+          <p :style="contentColorStyle1">{{flexContentTxt1_2}}</p>
+          <p :style="endColorStyle1">{{flexEndTxt1_2}}</p>
+          <button class="p-modal__btn" :style="buttonColorStyle1">{{flexButtonTxt1_2}}</button>
       </div>
     </div>
-    <div class='l-modal__bg' v-if='modalBgVisible1' @click='hideModal'></div>
+    <div class="l-modal__bg" v-if="modalBgVisible1" @click="hideModal"></div>
 
-    <div class='l-modal' v-if='modalVisible2'>
-      <div class='modalStyle1' @click='hideModal'>
-        <div class='img-container'>
-          <img :src='imgFile3' class='img-sec'>
+    <div class="l-modal" v-if="modalVisible2">
+      <div class="modalStyle1" @click="hideModal">
+        <div class="img-container">
+          <img :src="imgFile3" class="img-sec">
         </div>
-          <p :style='titleColorStyle2'>{{flexTitleTxt2_1}}</p>
-          <p :style='contentColorStyle2'>{{flexContentTxt2_1}}</p>
-          <p :style='endColorStyle2'>{{flexEndTxt2_1}}</p>
-          <button class='p-modal__btn' :style='buttonColorStyle2'>{{flexButtonTxt2_1}}</button>
+          <p :style="titleColorStyle2">{{flexTitleTxt2_1}}</p>
+          <p :style="contentColorStyle2">{{flexContentTxt2_1}}</p>
+          <p :style="endColorStyle2">{{flexEndTxt2_1}}</p>
+          <button class="p-modal__btn" :style="buttonColorStyle2">{{flexButtonTxt2_1}}</button>
       </div>
-      <div class='modalStyle2' @click='hideModal'>
-        <div class='img-container'>
-          <img :src='imgFile4' class='img-sec'>
+      <div class="modalStyle2" @click="hideModal">
+        <div class="img-container">
+          <img :src="imgFile4" class="img-sec">
         </div>
-          <p :style='titleColorStyle2'>{{flexTitleTxt2_2}}</p>
-          <p :style='contentColorStyle2'>{{flexContentTxt2_2}}</p>
-          <p :style='endColorStyle2'>{{flexEndTxt2_2}}</p>
-          <button class='p-modal__btn' :style='buttonColorStyle2'>{{flexButtonTxt2_2}}</button>
+          <p :style="titleColorStyle2">{{flexTitleTxt2_2}}</p>
+          <p :style="contentColorStyle2">{{flexContentTxt2_2}}</p>
+          <p :style="endColorStyle2">{{flexEndTxt2_2}}</p>
+          <button class="p-modal__btn" :style="buttonColorStyle2">{{flexButtonTxt2_2}}</button>
       </div>
     </div>
-    <div class='l-modal__bg' v-if='modalBgVisible2' @click='hideModal'></div>
-    <!--<preview-modal :modalText='text6' :selectedTitleColor='selected_title_color1' :selectedContentColor='selected_content_color1'
-    :selectedButtonColor='selected_button_color1'/>-->
-    <button class='upload-btn' @click='uploadText();showPopup();'>上傳</button>
-    <div class='l-modal-body' v-if='modalVisible3'>
-        <div class='modal-sec1'>
+    <div class="l-modal__bg" v-if="modalBgVisible2" @click="hideModal"></div>
+    <!--<preview-modal :modalText="text6" :selectedTitleColor="selected_title_color1" :selectedContentColor="selected_content_color1"
+    :selectedButtonColor="selected_button_color1"/>-->
+    <button class="upload-btn" @click="uploadText();showPopup();">上傳</button>
+    
+    <div class="l-modal-body" v-if="modalVisible3">
+        <div class="modal-sec1">
           <label>
-            <div class='img-field-container'>
+            <div class="img-field-container">
               <div>
-                <p class='btn-title'>上傳圖片</p>
+                <p class="btn-title">上傳圖片</p>
               </div>
-              <input type='file' class='input-img-field' accept='image/*' @change='uploadFile1' ref='img1'>
+              <input type="file" class="input-img-field" accept="image/*" @change="uploadFile1" ref="img1">
             </div>
            </label>
-          <div class='img-wrapper1'>
-            <img :src='imgFile1' class='img-sec'>
+          <div class="img-wrapper1">
+            <img :src="imgFile1" class="img-sec">
           </div>
           <div>
-            <p class='link-title-field'>輸入送客連結</p>
+            <p class="link-title-field">輸入送客連結</p>
             <form>
-              <input type='url' class='input-link-field' placeholder='https//' v-model='lp_url1'>
+              <input type="url" class="input-link-field" placeholder="https//" v-model="lp_url1">
             </form>
           </div>
       </div>
-      <div class='modal-sec2'>
+      <div class="modal-sec2">
           <label>
-            <div class='img-field-container'>
+            <div class="img-field-container">
               <div>
-                <p class='btn-title'>上傳圖片</p>
+                <p class="btn-title">上傳圖片</p>
               </div>
-              <input type='file' class='input-img-field' accept='image/*' @change='uploadFile2' ref='img2'>
+              <input type="file" class="input-img-field" accept="image/*" @change="uploadFile2" ref="img2">
             </div>
            </label>
-          <div class='img-wrapper1'>
-            <img :src='imgFile2' class='img-sec'>
+          <div class="img-wrapper1">
+            <img :src="imgFile2" class="img-sec">
           </div>
           <div>
-            <p class='link-title-field'>輸入送客連結</p>
+            <p class="link-title-field">輸入送客連結</p>
             <form>
-              <input type='url' class='input-link-field' placeholder='https//' v-model='lp_url2'>
+              <input type="url" class="input-link-field" placeholder="https//" v-model="lp_url2">
             </form>
           </div>
       </div>
-      <button class='modalDetail-btn' @click='closeModalBody1'>Close</button>
+      <button class="modalDetail-btn" @click="closeModalBody1">Close</button>
     </div>
-    <div class='l-modal-body' v-if='modalVisible4'>
-        <div class='modal-sec1'>
+  
+    <div class="l-modal-body" v-if="modalVisible4">
+        <div class="modal-sec1">  
           <label>
-            <div class='img-field-container'>
+            <div class="img-field-container">
               <div>
-                <p class='btn-title'>上傳圖片</p>
-                <input type='file' class='input-img-field' accept='image/*' @change='uploadFile3' ref='img3'>
+                <p class="btn-title">上傳圖片</p>
+                <input type="file" class="input-img-field" accept="image/*" @change="uploadFile3" ref="img3">
               </div>
             </div>
            </label>
-          <div class='img-wrapper1'>
-            <img :src='imgFile3' class='img-sec'>
+          <div class="img-wrapper1">
+            <img :src="imgFile3" class="img-sec">
           </div>
           <div>
-            <p class='link-title-field'>輸入送客連結</p>
+            <p class="link-title-field">輸入送客連結</p>
             <form>
-              <input type='url' class='input-link-field' placeholder='https//' v-model='lp_url3'>
+              <input type="url" class="input-link-field" placeholder="https//" v-model="lp_url3">
             </form>
           </div>
       </div>
-      <div class='modal-sec2'>
+      <div class="modal-sec2">
           <label>
-            <div class='img-field-container'>
+            <div class="img-field-container">
               <div>
-                <p class='btn-title'>上傳圖片</p>
+                <p class="btn-title">上傳圖片</p>
               </div>
-              <input type='file' class='input-img-field' accept='image/*' @change='uploadFile4' ref='img4'>
+              <input type="file" class="input-img-field" accept="image/*" @change="uploadFile4" ref="img4">
             </div>
            </label>
-          <div class='img-wrapper1'>
-            <img :src='imgFile4' class='img-sec'>
+          <div class="img-wrapper1">
+            <img :src="imgFile4" class="img-sec">
           </div>
           <div>
-            <p class='link-title-field'>輸入送客連結</p>
+            <p class="link-title-field">輸入送客連結</p>
             <form>
-              <input type='url' class='input-link-field' placeholder='https//' v-model='lp_url4'>
+              <input type="url" class="input-link-field" placeholder="https//" v-model="lp_url4">
             </form>
           </div>
       </div>
-      <button class='modalDetail-btn' @click='closeModalBody2'>Close</button>
+      <button class="modalDetail-btn" @click="closeModalBody2">Close</button>
     </div>
 
   </div>
@@ -257,123 +262,127 @@
 
 <script>
 import axios from 'axios'
-
+//axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+//import SettingwModal from './SettingwModal.vue'
 export default {
-  name: 'demo1',
+  components: {
+    //SettingwModal
+    //ibank世紀車貸
+  },
   data () {
     return {
       tables: '',
       tableSelected: 'ibank世紀車貸',
-      pushNum: ['push1'],
-      selectedPushNum: 'push1',
-      textList: [],
-      pgid: '',
-      text1: '',
-      text2: '',
-      text3: '',
-      text4: '',
-      text5: '',
-      text6: '',
-      text7: '',
-      text8: '',
-      text9: '',
-      flex_text1_1: '',
-      flex_text1_2: '',
-      flex_text2_1: '',
-      flex_text2_2: '',
-      flexTitleTxt1_1: '',
-      flexTitleTxt1_2: '',
-      flexTitleTxt2_1: '',
-      flexTitleTxt2_2: '',
-      flexContentTxt1_1: '',
-      flexContentTxt1_2: '',
-      flexContentTxt2_1: '',
-      flexContentTxt2_2: '',
-      flexEndTxt1_1: '',
-      flexEndTxt1_2: '',
-      flexEndTxt2_1: '',
-      flexEndTxt2_2: '',
-      flexButtonTxt1_1: '',
-      flexButtonTxt1_2: '',
-      flexButtonTxt2_1: '',
-      flexButtonTxt2_2: '',
-      colors: ['紅色', '藍色', '黃色', '粉色', '土地色', '水藍色', '灰色', '淺綠色', '橙色'],
-      colors_dic: {紅色: '#FF0000', 藍色: '#0000FF', 黃色: '#FFFF00', 粉色: '#FFCCCC', 土地色: '#800000', 水藍色: '#00FFFF', 灰色: '#BBBBBB', 淺綠色: '#99FF33', 橙色: '#FFA500'},
-      selectedTitleColor1: '',
-      selectedTitleColor2: '',
-      selectedEndColor1: '',
-      selectedEndColor2: '',
-      selectedButtonColor1: '',
-      selectedButtonColor2: '',
+      pushNum:['push1'],
+      selectedPushNum:'push1',
+      textList:[],
+      pgid:'',
+      text1:'',
+      text2:'',
+      text3:'',
+      text4:'',
+      text5:'',
+      text6:'',
+      text7:'',
+      text8:'',
+      text9:'',
+      flex_text1_1:'',
+      flex_text1_2:'',
+      flex_text2_1:'',
+      flex_text2_2:'',
+      flexTitleTxt1_1:'',
+      flexTitleTxt1_2:'',
+      flexTitleTxt2_1:'',
+      flexTitleTxt2_2:'',
+      flexContentTxt1_1:'',
+      flexContentTxt1_2:'',
+      flexContentTxt2_1:'',
+      flexContentTxt2_2:'',
+      flexEndTxt1_1:'',
+      flexEndTxt1_2:'',
+      flexEndTxt2_1:'',
+      flexEndTxt2_2:'',
+      flexButtonTxt1_1:'',
+      flexButtonTxt1_2:'',
+      flexButtonTxt2_1:'',
+      flexButtonTxt2_2:'',
+      colors:['紅色','藍色','黃色','粉色','土地色','水藍色','灰色','淺綠色','橙色'],
+      colors_dic:{紅色:'#FF0000',藍色:'#0000FF',黃色:'#FFFF00',粉色:'#FFCCCC',土地色:'#800000',水藍色:'#00FFFF',灰色:'#BBBBBB',淺綠色:'#99FF33',橙色:'#FFA500'},
+      selectedTitleColor1:'',
+      selectedTitleColor2:'',
+      selectedEndColor1:'',
+      selectedEndColor2:'',
+      selectedButtonColor1:'',
+      selectedButtonColor2:'',
       modalVisible1: false,
       modalVisible2: false,
       modalVisible3: false,
       modalVisible4: false,
       modalBgVisible1: false,
       modalBgVisible2: false,
-      modalTitleColor1: '',
-      modalTitleColor2: '',
-      modalEndColor1: '',
-      modalEndColor2: '',
-      modalButtonColor1: '',
-      modalButtonColor2: '',
-      imgFile1: '',
-      imgFile2: '',
-      imgFile3: '',
-      imgFile4: '',
-      imgUrl1: '',
-      imgUrl2: '',
-      imgUrl3: '',
-      imgUrl4: '',
-      queryTxt1: '',
-      queryTxt2: '',
-      queryTxt3: '',
-      queryTxt4: '',
-      queryTxt5: '',
-      queryTxt6: '',
-      queryTxt7: '',
-      queryTxt8: '',
-      queryTxt9: '',
-      queryTxt10: '',
-      queryTxt11: '',
-      queryTxt12: '',
-      queryTxt13: '',
-      queryTxt14: '',
-      queryTxt15: '',
-      queryTxt16: '',
-      queryTxt17: '',
-      queryTxt18: '',
-      queryTxt19: '',
-      queryTxt20: '',
-      queryTxt21: '',
-      queryTxt22: '',
-      queryTxt23: '',
-      queryTxt24: '',
-      queryTxt25: '',
-      queryTxt26: '',
-      queryTxt27: '',
-      queryTxt28: '',
-      queryTxt29: '',
-      queryTxt30: '',
-      queryTxt31: '',
-      queryTxt32: '',
-      queryTxt33: '',
-      queryTxt34: '',
-      queryTxt35: '',
-      queryTxt36: '',
-      queryTxt37: '',
-      queryTxt38: '',
-      tagName1: '',
-      tagName2: '',
-      tagName3: '',
-      tagName4: '',
-      lp_url1: '',
-      lp_url2: '',
-      lp_url3: '',
-      lp_url4: '',
-      triggerKeyword: '',
-      flexTitle: '',
-      element: ''
+      modalTitleColor1:'',
+      modalTitleColor2:'',
+      modalEndColor1:'',
+      modalEndColor2:'',
+      modalButtonColor1:'',
+      modalButtonColor2:'',
+      imgFile1:'',
+      imgFile2:'',
+      imgFile3:'',
+      imgFile4:'',
+      imgUrl1:'',
+      imgUrl2:'',
+      imgUrl3:'',
+      imgUrl4:'',
+      queryTxt1:'',
+      queryTxt2:'',
+      queryTxt3:'',
+      queryTxt4:'',
+      queryTxt5:'',
+      queryTxt6:'',
+      queryTxt7:'',
+      queryTxt8:'',
+      queryTxt9:'',
+      queryTxt10:'',
+      queryTxt11:'',
+      queryTxt12:'',
+      queryTxt13:'',
+      queryTxt14:'',
+      queryTxt15:'',
+      queryTxt16:'',
+      queryTxt17:'',
+      queryTxt18:'',
+      queryTxt19:'',
+      queryTxt20:'',
+      queryTxt21:'',
+      queryTxt22:'',
+      queryTxt23:'',
+      queryTxt24:'',
+      queryTxt25:'',
+      queryTxt26:'',
+      queryTxt27:'',
+      queryTxt28:'',
+      queryTxt29:'',
+      queryTxt30:'',
+      queryTxt31:'',
+      queryTxt32:'',
+      queryTxt33:'',
+      queryTxt34:'',
+      queryTxt35:'',
+      queryTxt36:'',
+      queryTxt37:'',
+      queryTxt38:'',
+      tagName1:'',
+      tagName2:'',
+      tagName3:'',
+      tagName4:'',
+      lp_url1:'',
+      lp_url2:'',
+      lp_url3:'',
+      lp_url4:'',
+      triggerKeyword:'',
+      flexTitle:'',
+      element:''
     }
   },
   created () {
@@ -381,89 +390,89 @@ export default {
       this.tables = response.data
     })
   },
-  watch: {
+  watch:{
     selectedTitleColor1: function () {
-      this.modalTitleColor1 = this.colors_dic[this.selectedTitleColor1]
+      this.modalTitleColor1 = this.colors_dic[this.selectedTitleColor1];
     },
     selectedTitleColor2: function () {
-      this.modalTitleColor2 = this.colors_dic[this.selectedTitleColor2]
+      this.modalTitleColor2 = this.colors_dic[this.selectedTitleColor2];
     },
     selectedEndColor1: function () {
-      this.modalEndColor1 = this.colors_dic[this.selectedEndColor1]
+      this.modalEndColor1 = this.colors_dic[this.selectedEndColor1];
     },
     selectedEndColor2: function () {
-      this.modalEndColor2 = this.colors_dic[this.selectedEndColor2]
+      this.modalEndColor2 = this.colors_dic[this.selectedEndColor2];
     },
     selectedButtonColor1: function () {
-      this.modalButtonColor1 = this.colors_dic[this.selectedButtonColor1]
+      this.modalButtonColor1 = this.colors_dic[this.selectedButtonColor1];
     },
     selectedButtonColor2: function () {
-      this.modalButtonColor2 = this.colors_dic[this.selectedButtonColor2]
-    }
+      this.modalButtonColor2 = this.colors_dic[this.selectedButtonColor2];
+    },
   },
-  computed: {
+  computed : {
     titleColorStyle1: function () {
       return {
-        color: this.modalTitleColor1,
-        position: 'absolute',
-        top: '43%',
-        left: '29%',
+        color:this.modalTitleColor1,
+        position:'absolute',
+        top:'43%',
+        left:'29%',
         textAlign: 'center'
       }
     },
     titleColorStyle2: function () {
       return {
-        color: this.modalTitleColor2,
-        position: 'absolute',
-        top: '43%',
-        left: '29%',
+        color:this.modalTitleColor2,
+        position:'absolute',
+        top:'43%',
+        left:'29%',
         textAlign: 'center'
       }
     },
     contentColorStyle1: function () {
       return {
-        position: 'absolute',
-        top: '55%',
-        marginLeft: '40px',
+        position:'absolute',
+        top:'55%',
+        marginLeft:'40px',
         textAlign: 'center'
       }
     },
     contentColorStyle2: function () {
       return {
-        position: 'absolute',
-        top: '55%',
-        marginLeft: '40px',
+        position:'absolute',
+        top:'55%',
+        marginLeft:'40px',
         textAlign: 'center'
       }
     },
     endColorStyle1: function () {
       return {
-        color: this.modalEndColor1,
-        position: 'absolute',
-        top: '70%',
-        left: '25%',
+        color:this.modalEndColor1,
+        position:'absolute',
+        top:'70%',
+        left:'25%',
         textAlign: 'center'
       }
     },
     endColorStyle2: function () {
       return {
-        color: this.modalEndColor2,
-        position: 'absolute',
-        top: '70%',
-        left: '25%',
+        color:this.modalEndColor2,
+        position:'absolute',
+        top:'70%',
+        left:'25%',
         textAlign: 'center'
       }
     },
     buttonColorStyle1: function () {
       return {
-        backgroundColor: this.modalButtonColor1,
-        color: 'white'
+        backgroundColor:this.modalButtonColor1,
+        color:'white'
       }
     },
     buttonColorStyle2: function () {
       return {
-        backgroundColor: this.modalButtonColor2,
-        color: 'white'
+        backgroundColor:this.modalButtonColor2,
+        color:'white'
       }
     }
   },
@@ -471,8 +480,8 @@ export default {
     getPgid: function () {
       axios.get('https://getpgid-dot-galvanic-ripsaw-281806.df.r.appspot.com/', {
         params: {
-          client_name: this.tableSelected
-        }
+          client_name: this.tableSelected,
+        },
       }).then(response => {
         this.pgid = response.data
       })
@@ -493,189 +502,202 @@ export default {
       this.modalVisible4 = false
     },
     uploadFile1: function () {
-      var imgFile1 = this.$refs.img1.files[0]
-      this.imgFile1 = URL.createObjectURL(imgFile1)
+      var img_file1 = this.$refs.img1.files[0]
+      this.imgFile1 = URL.createObjectURL(img_file1)
       // this.imgUrl1 = this.imgFile1
       var params = new FormData()
-      params.append('image', imgFile1)
+      params.append('image', img_file1)
       // params.append('client_name', 'ibank')
       params.append('client_name', this.tableSelected)
-      axios.post('https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com', params, { withCredentials: true },
-        {
-          headers:
-          {
+      //https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com
+      //http://127.0.0.1:5000/
+      axios.post("https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com", params,{ withCredentials: true },
+      {
+        headers: 
+          { 
             'Access-Control-Allow-Origin': '*',
             'content-type': 'multipart/form-data'
-          }
-        }).then(response => {
+          },
+      }).then(response => {
         console.log(response.data)
         this.imgUrl1 = response.data
       }).catch(function (error) {
-        for (let key of Object.keys(error)) {
-          console.log(key)
-          console.log(error[key])
+        for(let key of Object.keys(error)) {
+          console.log(key);
+          console.log(error[key]);
         }
-      })
+      });
     },
     uploadFile2: function () {
-      var imgFile2 = this.$refs.img2.files[0]
-      this.imgFile2 = URL.createObjectURL(imgFile2)
+      var img_file2 = this.$refs.img2.files[0]
+      this.imgFile2 = URL.createObjectURL(img_file2)
       var params = new FormData()
-      params.append('image', imgFile2)
+      params.append('image', img_file2)
       // params.append('client_name', 'ibank')
       params.append('client_name', this.tableSelected)
 
-      axios.post('https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com', params, { withCredentials: true },
-        {
-          headers:
-          {
+      axios.post("https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com", params,{ withCredentials: true },
+      {
+        headers: 
+          { 
             'Access-Control-Allow-Origin': '*',
             'content-type': 'multipart/form-data'
-          }
-        }).then(response => {
+          },
+      }).then(response =>{
         console.log(response.data)
         this.imgUrl2 = response.data
       }).catch(function (error) {
-        for (let key of Object.keys(error)) {
-          console.log(key)
-          console.log(error[key])
+        for(let key of Object.keys(error)) {
+        console.log(key);
+        console.log(error[key]);
         }
-      })
+      });
     },
     uploadFile3: function () {
-      var imgFile3 = this.$refs.img3.files[0]
-      this.imgFile3 = URL.createObjectURL(imgFile3)
+      var img_file3 = this.$refs.img3.files[0]
+      this.imgFile3 = URL.createObjectURL(img_file3)
       var params = new FormData()
-      params.append('image', imgFile3)
+      params.append('image', img_file3)
       // params.append('client_name', 'ibank')
       params.append('client_name', this.tableSelected)
-      axios.post('https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com', params, { withCredentials: true },
-        {
-          headers:
-          {
+      axios.post("https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com", params,{ withCredentials: true },
+      {
+        headers: 
+          { 
             'Access-Control-Allow-Origin': '*',
             'content-type': 'multipart/form-data'
-          }
-        }).then(response => {
+          },
+      }).then(response =>{
         console.log(response.data)
         this.imgUrl3 = response.data
       }).catch(function (error) {
-        for (let key of Object.keys(error)) {
-          console.log(key)
-          console.log(error[key])
+        for(let key of Object.keys(error)) {
+        console.log(key);
+        console.log(error[key]);
         }
-      })
+      });
     },
     uploadFile4: function () {
-      var imgFile4 = this.$refs.img4.files[0]
-      this.imgFile4 = URL.createObjectURL(imgFile4)
+      var img_file4 = this.$refs.img4.files[0]
+      this.imgFile4 = URL.createObjectURL(img_file4)
       var params = new FormData()
-      params.append('image', imgFile4)
+      params.append('image', img_file4)
       // params.append('client_name', 'ibank')
       params.append('client_name', this.tableSelected)
-      axios.post('https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com', params, { withCredentials: true },
-        {
-          headers:
-          {
+      axios.post("https://uploadimg-dot-galvanic-ripsaw-281806.df.r.appspot.com", params,{ withCredentials: true },
+      {
+        headers: 
+          { 
             'Access-Control-Allow-Origin': '*',
             'content-type': 'multipart/form-data'
-          }
-        }).then(response => {
+          },
+      }).then(response =>{
         console.log(response.data)
         this.imgUrl4 = response.data
       }).catch(function (error) {
-        for (let key of Object.keys(error)) {
-          console.log(key)
-          console.log(error[key])
+        for(let key of Object.keys(error)) {
+        console.log(key);
+        console.log(error[key]);
         }
-      })
+      });
     },
     uploadText: function () {
-      var txt1 = '##001' + '[' + this.tagName1 + ']' + '\n' + this.text1 + '\n'
-      var option1 = '##jump001\n' + this.queryTxt2 + '\n'
-      var option2 = '##jump002\n' + this.queryTxt3 + '\n'
-      var txt2 = '##002<jump001' + '[' + this.tagName2 + ']' + '\n' + this.text4 + '\n##end\n'
-      var txt3 = '##004<jump002' + '[' + this.tagName2 + ']' + '\n' + this.text7 + '\n##end\n'
+      var txt1 = "##001"+"["+this.tagName1+"]"+"\n" + this.text1 + "\n";
+      var option1 = "##jump001\n" + this.queryTxt2 + "\n";
+      var option2 = "##jump002\n" + this.queryTxt3 + "\n";
+      var txt2 = "##002<jump001"+"["+this.tagName2+"]"+"\n" + this.text4 + "\n##end\n";
+      var txt3 = "##004<jump002"+"["+this.tagName2+"]"+"\n"+ this.text7 + "\n##end\n";
 
-      var flexTxt1 = '##flex(1)000' + '[' + this.tagName3 + ']' + '\n' + this.flexTitle + '\n##flex(1)001\n' + this.imgUrl1 + '\n##flex(1)002\n' + this.queryTxt7 + '\n##flex(1)003\n' + this.queryTxt8 +
-      '\n##flex(1)004\n' + this.queryTxt9 + '\n' + this.queryTxt10 + '\n##flex(1)005\n' + '\n##flex(1)006\n' + this.queryTxt11 + '\n' + this.queryTxt12 + '\n##flex(1)007\n' +
-      this.lp_url1 + '\n##flex(1)008\n' + this.flexButtonTxt1_1 + '\n##flex(1)009\n' + this.modalButtonColor1 + '\n'
+      var flexTxt1 = "##flex(1)000"+"["+this.tagName3+"]"+"\n" + this.flexTitle + "\n##flex(1)001\n" + this.imgUrl1 + "\n##flex(1)002\n" + this.queryTxt7 + "\n##flex(1)003\n" + this.queryTxt8 +
+      "\n##flex(1)004\n" + this.queryTxt9 + '\n'+this.queryTxt10+"\n##flex(1)005\n" + "\n##flex(1)006\n" + this.queryTxt11  +"\n" +this.queryTxt12 + "\n##flex(1)007\n" 
+      + this.lp_url1 + "\n##flex(1)008\n" + this.flexButtonTxt1_1 + "\n##flex(1)009\n" + this.modalButtonColor1 +"\n";
 
-      var flexTxt2 = '##flex(1)010\n' + this.imgUrl2 + '\n##flex(1)011\n' + this.queryTxt14 + '\n##flex(1)012\n' + this.queryTxt15 +
-      '\n##flex(1)013\n' + this.queryTxt16 + '\n' + this.queryTxt17 + '\n##flex(1)014\n' + '\n##flex(1)015\n' + this.queryTxt18 + '\n' + this.queryTxt19 + '\n##flex(1)016\n' +
-      this.lp_url2 + '\n##flex(1)017\n' + this.flexButtonTxt1_2 + '\n##flex(1)018\n' + this.modalButtonColor1 + '\n'
+      var flexTxt2 = "##flex(1)010\n" + this.imgUrl2 + "\n##flex(1)011\n" + this.queryTxt14 + "\n##flex(1)012\n" +this.queryTxt15 +
+      "\n##flex(1)013\n" + this.queryTxt16 +"\n"+this.queryTxt17+ "\n##flex(1)014\n" + "\n##flex(1)015\n" + this.queryTxt18  +"\n"+ this.queryTxt19 +"\n##flex(1)016\n" 
+      + this.lp_url2 + "\n##flex(1)017\n" + this.flexButtonTxt1_2 + "\n##flex(1)018\n" + this.modalButtonColor1 + "\n";
 
-      var flexTxt3 = '##flex(2)000' + '[' + this.tagName3 + ']' + '\n' + this.flexTitle + '\n##flex(2)001\n' + this.imgUrl3 + '\n##flex(2)002\n' + this.queryTxt25 + '\n##flex(2)003\n' + this.queryTxt26 +
-      '\n##flex(2)004\n' + this.queryTxt27 + '\n' + this.queryTxt28 + '\n##flex(2)005\n' + '\n##flex(2)006\n' + this.queryTxt29 + '\n' + this.queryTxt30 + '\n##flex(2)007\n' +
-      this.lp_url3 + '\n##flex(2)008\n' + this.flexButtonTxt2_1 + '\n##flex(2)009\n' + this.modalButtonColor2 + '\n'
+      var flexTxt3 = "##flex(2)000"+"["+this.tagName3+"]"+"\n" + this.flexTitle + "\n##flex(2)001\n" + this.imgUrl3 + "\n##flex(2)002\n" + this.queryTxt25 + "\n##flex(2)003\n" + this.queryTxt26 + 
+      "\n##flex(2)004\n" + this.queryTxt27 +"\n"+this.queryTxt28+ "\n##flex(2)005\n" + "\n##flex(2)006\n" + this.queryTxt29  + "\n"+this.queryTxt30 +"\n##flex(2)007\n" +
+      this.lp_url3 + "\n##flex(2)008\n" + this.flexButtonTxt2_1 + "\n##flex(2)009\n" + this.modalButtonColor2 + "\n";
 
-      var flexTxt4 = '##flex(2)010\n' + this.imgUrl4 + '\n##flex(2)011\n' + this.queryTxt32 + '\n##flex(2)012\n' + this.queryTxt33 +
-      '\n##flex(2)013\n' + this.queryTxt34 + '\n' + this.queryTxt35 + '\n##flex(2)014\n' + '\n##flex(2)015\n' + this.queryTxt36 + '\n' + this.queryTxt37 + '\n##flex(2)016\n' +
-      this.lp_url4 + '\n##flex(2)017\n' + this.flexButtonTxt2_2 + '\n##flex(2)018\n' + this.modalButtonColor2 + '\n##end'
-
-      const accessUrl = 'https://prod.chatannie.com/saveScenarioApi'
-      const adminId = '0001'
-      const accountId = this.pgid
+      var flexTxt4 = "##flex(2)010\n" + this.imgUrl4 + "\n##flex(2)011\n" + this.queryTxt32 + "\n##flex(2)012\n" + this.queryTxt33 +
+      "\n##flex(2)013\n" + this.queryTxt34 +"\n"+this.queryTxt35+ "\n##flex(2)014\n" + "\n##flex(2)015\n" + this.queryTxt36  + "\n"+this.queryTxt37 + "\n##flex(2)016\n" +
+      this.lp_url4 + "\n##flex(2)017\n" + this.flexButtonTxt2_2 + "\n##flex(2)018\n" + this.modalButtonColor2 + "\n##end";
+      
+      const accessUrl = "https://prod.chatannie.com/saveScenarioApi";
+      const adminId = "0001";
+      const accountId = this.pgid ;//'gti6djtyy2t-loys-p79l-cx9i-0zbted4b231611'
       // const accountId = 'gti6djtyy2t-loys-p79l-cx9i-0zbted4b231611'
-      const scenarioName = this.selectedPushNum
-      const triggerKind = 'keyword'
-      const triggerKeywords = this.triggerKeyword
+      const scenarioName = this.selectedPushNum;
+      const triggerKind = "keyword";
+      const triggerKeywords = this.triggerKeyword;
       // console.log(accountId)
-      const queryContent = txt1 + option1 + option2 + txt2 + flexTxt1 + flexTxt2 + txt3 + flexTxt3 + flexTxt4
+      const queryContent = txt1 + option1 + option2 + txt2 + flexTxt1 + flexTxt2 + txt3 + flexTxt3 + flexTxt4;
       // console.log(queryContent)
       axios.post(accessUrl, {
-        adminId: adminId,
-        accountId: accountId,
-        scenarioName: scenarioName,
-        triggerKind: triggerKind,
-        triggerKeywords: triggerKeywords,
-        content: queryContent
-      }
+          adminId:adminId,
+          accountId:accountId,
+          scenarioName:scenarioName,
+          triggerKind:triggerKind,
+          triggerKeywords:triggerKeywords,
+          content:queryContent,
+        },
       ).then(response => {
         console.log(response)
       })
-        .catch(function (error) {
-          console.log(error)
-        })
-      var requestBody = 'id: ' + accountId + '\n' +
+      .catch(function (error) {
+        console.log(error);
+      });
+      var requestBody =   'id: ' + accountId + '\n' +
         'scenarioName: ' + scenarioName + '\n' +
         'triggerKeywords: ' + triggerKeywords + '\n' +
         'flexTitle: ' + this.flexTitle + '\n' +
         'tag1: ' + this.tagName1 + '\n' +
         'tag2: ' + this.tagName2 + '\n' +
         'tag3: ' + this.tagName3 + '\n' +
-        'queryConten: ' + queryContent
-      console.log(requestBody)
-
-      var params1 = new FormData()
+        'queryConten: ' + queryContent ;
+      console.log(requestBody);
+      
+      var params1 = new FormData();
       params1.append('client_name', this.tableSelected)
-      params1.append('pushNum', this.selectedPushNum)
-      params1.append('requestBody', requestBody)
+      params1.append('push_num',this.selectedPushNum)
+      params1.append('requestBody',requestBody);
 
-      axios.post('https://uploadgooglesheet-dot-galvanic-ripsaw-281806.df.r.appspot.com/', params1,
-        { headers:
-          {
-            'Access-Control-Allow-Origin': '*'
+      
+      axios.post('https://uploadgooglesheet-dot-galvanic-ripsaw-281806.df.r.appspot.com/',params1,
+      // {params:{
+      //   'requestBody':'test',
+      //   'client_name':this.client_name,
+      //   'push_num':this.pushNum
+
+      // }},
+      { headers: 
+          { 
+            'Access-Control-Allow-Origin': '*',
 
           }
-        }
+      }
       ).then(response => {
         console.log(response)
       })
-        .catch(function (error) {
-          console.log(error)
-        })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
     },
-
+    
     showModal1: function () {
+      //this.$modal.show('preview-modal');
       this.modalVisible1 = true
       this.modalBgVisible1 = true
     },
     showModal2: function () {
+      //this.$modal.show('preview-modal');
       this.modalVisible2 = true
       this.modalBgVisible2 = true
     },
     hideModal: function () {
+      //this.$modal.show('preview-modal');
       this.modalVisible1 = false
       this.modalBgVisible1 = false
       this.modalVisible2 = false
@@ -683,24 +705,25 @@ export default {
     },
     searchFiles: function () {
       axios.get('https://testsearch-dot-galvanic-ripsaw-281806.df.r.appspot.com/', {
+      // axios.get('http://0.0.0.0:3000/', {
         params: {
-          client_name: this.tableSelected
+          client_name: this.tableSelected,
         }
-      }, {
-        headers:
-          {
-            'Access-Control-Allow-Origin': '*'
-          }
+        },{
+        headers: 
+          { 
+            'Access-Control-Allow-Origin': '*',
+          },
       }).then(response => {
-        var array = response.data
+        var array = response.data;
         for (var key in array) {
-          var pushNum = array[key]
-          this.pushNum.push(pushNum)
+          var push_num = array[key]
+          this.pushNum.push(push_num)
         }
       })
     },
-    showPopup: function () {
-      alert('已上傳')
+    showPopup : function() {
+        alert("已上傳");
     },
     getTexts: function () {
       
